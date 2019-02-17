@@ -41,15 +41,13 @@ def make_square(og, file_to_square):
 
   full_path = save_drawn_area(im, file_to_square)
   new_image = Image.open(full_path)
-  new_image.show()
-  print("new image   ",new_image, og)
-  print("border values: calc, height, width: ", calc_border, height, width)
   if width < height:
     new_image.paste(og,box=(calc_border, 0, (short_side + calc_border), height ))
     new_image.show()
   else:
     new_image.paste(og,box=(0, calc_border, width, (short_side+ calc_border)))
     new_image.show()
+  save_squared_file(new_image, file_to_square, full_path)
 
 
 def save_drawn_area(im, file_to_square):
@@ -59,17 +57,11 @@ def save_drawn_area(im, file_to_square):
   im.save(full_path)
   return full_path
 
-def save_squared_file(og, file_to_square):
+def save_squared_file(new_image, file_to_square, full_path):
   file_path = os.path.dirname(os.path.abspath(file_to_square))
   file_name = os.path.basename(file_to_square)
-  prefix = input('What prefix do you want for this file? (Default is "squared_": ') or "squared_"
-  new_path = input('Would you like to save this in a new directory? (Default is yes) ') or 'yes'
-  if new_path == 'y' or new_path == 'yes':
-    added_path = input('What would you like to call this new subdirectory? (Default is "squared") ') or 'squared'
-    os.makedirs(file_path + '/' + added_path, exist_ok=True)
-    file_path = os.path.join(file_path, added_path)
-    print(f'new file path is: {file_path}')
-  og.save(f'{file_path}/{prefix}{file_name}')
+  os.makedirs(file_path + '/squared', exist_ok=True)
+  new_image.save(f'{file_path}/squared/{file_name}')
   print("File save complete. You may need to refresh your directory to see the changes.")
 
 def rotate_image(og, file_to_square):
@@ -95,11 +87,13 @@ def batch_process(dir_to_suqare):
   for photo in only_photos:
     to_square = dir_to_suqare + "/" + photo
     isImage(to_square)
+  print("Batch processing is complete")
 
 if __name__ == '__main__':
   batch_or_single = input('Are you processing a -directory- or a -single- file? ') or 'single'
   if batch_or_single is 'directory' or batch_or_single is 'd' or batch_or_single is 'D':
     dir_to_suqare = input('Full directory path: ')
+    print("All square files will be skipped.\nAll output files will be added to this directory in the 'squared' subdirectory\n\n\n")
     batch_process(dir_to_suqare)
   else:
     to_square = input('Which photo needs cropping? Include extension: ')
