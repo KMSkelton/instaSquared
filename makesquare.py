@@ -61,11 +61,11 @@ def save_squared_file(new_image, file_to_square, full_path):
   file_path = os.path.dirname(os.path.abspath(file_to_square))
   file_name = os.path.basename(file_to_square)
   os.makedirs(file_path + '/squared', exist_ok=True)
-  new_image.save(f'{file_path}/squared/{file_name}')
+  new_image.save(f'{file_path}/squared/squared_{file_name}')
   print("File save complete. You may need to refresh your directory to see the changes.")
 
 def rotate_image(og, file_to_square):
-  dir = input('Does this need to be rotated right, left, or flipped? ') or 'none'
+  dir = input('Does this need to be rotated right, left, or flipped? (Default is right)') or 'right'
   if dir is 'r' or dir is 'right':
     new_og = og.transpose(Image.ROTATE_270)
   elif dir is  'l' or dir is 'left':
