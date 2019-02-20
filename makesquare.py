@@ -20,16 +20,11 @@ def setup_square(og, file_to_square):
     print("Sorry about that, skipping...")
     return False
 
-  if og.width == og.height:
-    print("This image is already a square")
-    save_cropped_file(og, file_to_square)
-
-  if og.width != og.height:
-    orientation = input('Is this image in the correct orientation? ')
-    if orientation is 'n':
-      rotate_image(og, file_to_square)
-    else: 
-      make_square(og, file_to_square)
+  orientation = input('Is this image in the correct orientation? ')
+  if orientation is 'n':
+    rotate_image(og, file_to_square)
+  else: 
+    make_square(og, file_to_square)
 
 def make_square(og, file_to_square):
   width, height = og.size
